@@ -1,21 +1,32 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+#define SERVOMIN  400 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  450 // this is the 'maximum' pulse length count (out of 4096)
+
+Adafruit_PWMServoDriver table1 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x41);
 
 void OnControlChange(byte channel, byte controlNumber, byte amount) {
-  uint16_t brightness;
-  if (amount == 0) {
-    brightness = 4096;
+  if (channel == 2) {
+    uint16_t pulselen = map(amount, 0, 127, SERVOMIN, SERVOMAX);
+    servos.setPWM(((uint8_t) controlNumber), 0, pulselen);
   } else {
-    brightness = amount * 32;
+    uint16_t brightness;
+    if (amount == 0) {
+      brightness = 4096;
+    } else {
+      brightness = amount * 32;
+    }
+    table1.setPWM(((uint8_t) controlNumber) - 1, 0, brightness);
   }
-  pwm.setPWM(((uint8_t) controlNumber) - 1, 0, brightness);
 }
 
 void setup() {
-  pwm.begin();
-  pwm.setPWMFreq(1600);
+  table1.begin();
+  table1.setPWMFreq(1600);
+  servos.begin();
+  servos.setPWMFreq(60); // Analog servos run at ~60 Hz updates
   // strangely, controlChange doesn't work without a noteOn handler
   usbMIDI.setHandleNoteOn(OnNoteOn);
   usbMIDI.setHandleControlChange(OnControlChange) ;
@@ -26,5 +37,5 @@ void loop() {
 }
 
 void OnNoteOn(byte channel, byte note, byte velocity) {
-  // do nothing!
+  // zilch
 }
