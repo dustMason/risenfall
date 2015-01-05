@@ -1,8 +1,8 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#define SERVOMIN  400 // this is the 'minimum' pulse length count (out of 4096)
-#define SERVOMAX  450 // this is the 'maximum' pulse length count (out of 4096)
+#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  700 // this is the 'maximum' pulse length count (out of 4096)
 
 Adafruit_PWMServoDriver table1 = Adafruit_PWMServoDriver(0x40);
 Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x41);
