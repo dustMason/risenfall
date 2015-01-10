@@ -34,6 +34,8 @@ void OnControlChange(byte channel, byte controlNumber, byte amount) {
 void setup() {
   table1.begin();
   table1.setPWMFreq(1600);
+  table2.begin();
+  table2.setPWMFreq(1600);
   servos.begin();
   servos.setPWMFreq(60); // Analog servos run at ~60 Hz updates
   usbMIDI.setHandleNoteOn(OnNoteOn);
