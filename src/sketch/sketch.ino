@@ -2,18 +2,19 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
-#define SERVOMAX  700 // this is the 'maximum' pulse length count (out of 4096)
+// #define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
+// #define SERVOMAX  700 // this is the 'maximum' pulse length count (out of 4096)
 #define CURVE -4.5 // log curve weight (between -10 and 10)
 
-Adafruit_PWMServoDriver table1 = Adafruit_PWMServoDriver(0x40);
-Adafruit_PWMServoDriver table2 = Adafruit_PWMServoDriver(0x42);
-Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x41);
+Adafruit_PWMServoDriver board1 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver board2 = Adafruit_PWMServoDriver(0x41);
+Adafruit_PWMServoDriver board3 = Adafruit_PWMServoDriver(0x42);
+// Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x41);
 
 void OnControlChange(byte channel, byte controlNumber, byte amount) {
   if (channel == 16) {
-    uint16_t pulselen = map(amount, 0, 127, SERVOMIN, SERVOMAX);
-    servos.setPWM(((uint8_t) controlNumber), 0, pulselen);
+    // uint16_t pulselen = map(amount, 0, 127, SERVOMIN, SERVOMAX);
+    // servos.setPWM(((uint8_t) controlNumber), 0, pulselen);
   } else {
     uint16_t brightness;
     uint8_t pwmChannel = ((uint8_t) controlNumber) - 1;
@@ -24,22 +25,26 @@ void OnControlChange(byte channel, byte controlNumber, byte amount) {
       brightness = fscale(0, 127, 0, 4095, amount, CURVE);
     }
     if (channel == 1) {
-      table1.setPWM(pwmChannel, 0, brightness);
+      board1.setPWM(pwmChannel, 0, brightness);
     } else if (channel == 2) {
-      table2.setPWM(pwmChannel, 0, brightness);
+      board2.setPWM(pwmChannel, 0, brightness);
+    } else if (channel == 3) {
+      board3.setPWM(pwmChannel, 0, brightness);
     }
   }
 }
 
 void setup() {
-  table1.begin();
-  table1.setPWMFreq(1600);
-  table2.begin();
-  table2.setPWMFreq(1600);
-  servos.begin();
-  servos.setPWMFreq(60); // Analog servos run at ~60 Hz updates
+  board1.begin();
+  board1.setPWMFreq(1600);
+  board2.begin();
+  board2.setPWMFreq(1600);
+  board3.begin();
+  board3.setPWMFreq(1600);
+  // servos.begin();
+  // servos.setPWMFreq(60); // Analog servos run at ~60 Hz updates
   usbMIDI.setHandleNoteOn(OnNoteOn);
-  usbMIDI.setHandleControlChange(OnControlChange) ;
+  usbMIDI.setHandleControlChange(OnControlChange);
 }
 
 void loop() { usbMIDI.read(); }
