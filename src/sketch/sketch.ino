@@ -4,8 +4,8 @@
 
 #define CONTINOUS_SERVOMIN 100 // this is the 'minimum' pulse length count (out of 4096)
 #define CONTINOUS_SERVOMAX 700 // this is the 'maximum' pulse length count (out of 4096)
-#define MICRO_SERVOMIN 500 // this is the 'minimum' pulse length count (out of 4096)
-#define MICRO_SERVOMAX 2400 // this is the 'maximum' pulse length count (out of 4096)
+#define MICRO_SERVOMIN 150 // this is the 'minimum' pulse length count (out of 4096)
+#define MICRO_SERVOMAX 2000 // this is the 'maximum' pulse length count (out of 4096)
 #define CURVE -4.5 // log curve weight (between -10 and 10)
 
 Adafruit_PWMServoDriver board1 = Adafruit_PWMServoDriver(0x40);
