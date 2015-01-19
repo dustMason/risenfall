@@ -14,17 +14,17 @@ Adafruit_PWMServoDriver board3 = Adafruit_PWMServoDriver(0x42);
 Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x43);
 
 void OnControlChange(byte channel, byte controlNumber, byte amount) {
+  uint8_t pwmChannel = ((uint8_t) controlNumber) - 1;
   if (channel == 16) {
     uint16_t pulselen;
-    if (controlNumber < 9) {
+    if (pwmChannel < 8) {
       pulselen = map(amount, 0, 127, MICRO_SERVOMIN, MICRO_SERVOMAX);
     } else {
       pulselen = map(amount, 0, 127, CONTINOUS_SERVOMIN, CONTINOUS_SERVOMAX);
     }
-    servos.setPWM(((uint8_t) controlNumber), 0, pulselen);
+    servos.setPWM(pwmChannel, 0, pulselen);
   } else {
     uint16_t brightness;
-    uint8_t pwmChannel = ((uint8_t) controlNumber) - 1;
     if (amount == 0) {
       brightness = 4096;
     } else {
