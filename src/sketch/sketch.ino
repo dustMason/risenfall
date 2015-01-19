@@ -2,8 +2,10 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
-#define SERVOMAX  700 // this is the 'maximum' pulse length count (out of 4096)
+#define CONTINOUS_SERVOMIN 100 // this is the 'minimum' pulse length count (out of 4096)
+#define CONTINOUS_SERVOMAX 700 // this is the 'maximum' pulse length count (out of 4096)
+#define MICRO_SERVOMIN 500 // this is the 'minimum' pulse length count (out of 4096)
+#define MICRO_SERVOMAX 2400 // this is the 'maximum' pulse length count (out of 4096)
 #define CURVE -4.5 // log curve weight (between -10 and 10)
 
 Adafruit_PWMServoDriver board1 = Adafruit_PWMServoDriver(0x40);
@@ -13,7 +15,12 @@ Adafruit_PWMServoDriver servos = Adafruit_PWMServoDriver(0x43);
 
 void OnControlChange(byte channel, byte controlNumber, byte amount) {
   if (channel == 16) {
-    uint16_t pulselen = map(amount, 0, 127, SERVOMIN, SERVOMAX);
+    uint16_t pulselen;
+    if (controlNumber < 9) {
+      pulselen = map(amount, 0, 127, MICRO_SERVOMIN, MICRO_SERVOMAX);
+    } else {
+      pulselen = map(amount, 0, 127, CONTINOUS_SERVOMIN, CONTINOUS_SERVOMAX);
+    }
     servos.setPWM(((uint8_t) controlNumber), 0, pulselen);
   } else {
     uint16_t brightness;
