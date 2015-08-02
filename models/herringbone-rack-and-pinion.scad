@@ -115,7 +115,7 @@ module rack(innerRadius,borders,P,N,PA,CA) {
 			union() {
 				difference()	{
 					translate([0,0,supportSize/4]) {
-						support(supportL,supportW,supportSize/2,baseoffsetY);	 
+						support(supportL,supportW-0.33,supportSize/2,baseoffsetY);	 
 					}
 				}
 				for (i = [0:N-1]) {
