@@ -8,7 +8,7 @@ Table 1
 
 Number | Color | Wattage | Current Draw | Fwd Voltage    | Resistor
 ------ | ----- | ------- | ------------ | -------------- | -------------
-1      | White | ?       | 18mA         | 3-3.2v         | 120ohm / 1W
+1      | White | ?       | 18mA         | 3-3.2v         | 100ohm / 1/8W
 2      | White | ?       | 18mA         | 3-3.2v         | 120ohm / 1/8W
 3      | White | 1W      | 330mA        | 3.2v           | 5.6ohm / 1W
 4      |       |         |              |                | (missing LED)
