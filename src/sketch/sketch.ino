@@ -19,9 +19,9 @@
 // (from testing, the servo stops at midi cc value 77. 77 equates to 400 PWM value)
 
 
-#define TABLE_3_SERVO_LIMIT_LEFT 22       // pin numbner
-#define TABLE_3_SERVO_LIMIT_RIGHT 23      // pin number
-#define TABLE_3_SERVO_OFF_PULSELENGTH 0   // at one point was 410, but turning off the pin is better
+#define TABLE_3_SERVO_LIMIT_LEFT 22        // pin numbner
+#define TABLE_3_SERVO_LIMIT_RIGHT 23       // pin number
+#define TABLE_3_SERVO_OFF_PULSELENGTH 4096 // at one point was 410, but turning off the pin is better
 #define TABLE_3_SERVO_MIDI_STOP 77
 
 Adafruit_PWMServoDriver board1 = Adafruit_PWMServoDriver(0x40);
